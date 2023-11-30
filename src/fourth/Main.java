@@ -54,7 +54,7 @@ public class Main {
     public static String nonRepeatable(String s) {
         if (!s.isEmpty()) {
             String sim = Character.toString(s.charAt(0));
-            return sim + nonRepeatable(s.replace(sim, ""));
+            return sim + nonRepeatable(s.replace(sim, ""));//a+b+r+ ...+d+""
         } else return "";
     }
 
@@ -103,16 +103,16 @@ public class Main {
         return s;
     }
 
-    public static void backtrack(String combination, int n, List<String> combinations) {
-        if (combination.length() == n) {
-            combinations.add(combination);
+    public static void backtrack(String com, int n, List<String> combinations) {
+        if (com.length() == n) {
+            combinations.add(com);
         } else {
             // Проверяем, можно ли добавить 0 к текущей комбинации
-            if (!combination.endsWith("0")) {
-                backtrack(combination + "0", n, combinations);
+            if (!com.endsWith("0")) {
+                backtrack(com + "0", n, combinations);
             }
             // Всегда можно добавить 1
-            backtrack(combination + "1", n, combinations);
+            backtrack(com + "1", n, combinations);
         }
     }
 
@@ -157,7 +157,7 @@ public class Main {
             }
         }
         StringBuilder res = new StringBuilder();
-        List<Integer> values = new ArrayList<>(map.values());
+        List<Integer> values = new ArrayList<>(map.values());//2 3 4
         Collections.sort(values);
         while (!values.isEmpty() && !map.isEmpty()) {
             for (Character key : map.keySet()) {
@@ -321,18 +321,18 @@ public class Main {
         int fin = 0;
 
         for (int i = numsB.size() - 1; i >= 0; i--) {
-            int B = numsB.get(i);
+            int add = numsB.get(i);
             int ind = 0;
             if (!numsA.isEmpty()) {
                 for (int j = 0; j < numsA.size(); j++) {
-                    if (numsA.get(j) > B) {
-                        B = numsA.get(j);
+                    if (numsA.get(j) > add) {
+                        add = numsA.get(j);
                         ind = j;
                     }
                 }
                 numsA.remove(ind);
             }
-            fin = fin * 10 + B;
+            fin = fin * 10 + add;
         }
         return fin;
     }
