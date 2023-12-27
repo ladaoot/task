@@ -15,6 +15,7 @@ public class Main {
         System.out.println(spiderVsFly("A4", "B2"));
         System.out.println(spiderVsFly("A4", "C2"));
         System.out.println(spiderVsFly("C2", "A4"));
+        System.out.println(spiderVsFly("A2", "C4"));
         System.out.println("______________________________________");
         System.out.println(digitsCount(4666));
         System.out.println(digitsCount(544));
@@ -97,15 +98,42 @@ public class Main {
             cirSp--;
             fin = fin + "-" + radSp + cirSp;
         }
+
+        // через центр
         double cent = cirSp + cirF;
 
-        int min = 0;
-        if ((radSp == 'H' && ('A' <= radF && radF <= 'D')) || (radSp == 'A' && ('D' <= radF && radF <= 'H')))
-            min = Math.min(Math.abs(radF - 'A' + 1), Math.abs(radSp - 'D' + 1));
-        else min = Math.abs(radSp - radF);
-        double circus = 0.707 * cirSp * (min);
+        // по кругу
+        double cir = 0;
+        String stcir="";
 
-        if (cent < circus) {
+        String left = "";
+        String right = "";
+        char radSpR = radSp;
+        //right
+        while (radSpR != radF) {
+            if (radSpR == 'H') {
+                radSpR = 'A';
+            } else radSpR++;
+            right = right + "-" + radSpR + cirSp;
+        }
+        //left
+        while (radSp != radF) {
+            if (radSp == 'A') {
+                radSp = 'H';
+            } else radSp--;
+            left = left + "-" + radSp + cirSp;
+        }
+
+        if (left.length() < right.length()) {
+            cir = left.length();
+            stcir=left;
+        } else {
+            cir = right.length();
+            stcir = right;
+        }
+
+
+        if (cent < cir) {
             while (cirSp > 1) {
                 cirSp--;
                 fin = fin + "-" + radSp + cirSp;
@@ -117,27 +145,7 @@ public class Main {
                 fin = fin + "-" + radF + cirSp;
             }
         } else {
-            String left = "";
-            String right = "";
-            char radSpR = radSp;
-            //right
-            while (radSpR != radF) {
-                if (radSpR == 'H') {
-                    radSpR = 'A';
-                } else radSpR++;
-                right = right + "-" + radSpR + cirSp;
-            }
-            //left
-            while (radSp != radF) {
-                if (radSp == 'A') {
-                    radSp = 'H';
-                } else radSp--;
-                left = left + "-" + radSp + cirSp;
-            }
-
-            if (left.length() < right.length()) {
-                fin = fin + left;
-            } else fin = fin + right;
+            fin = fin + stcir;
         }
         return fin;
     }
